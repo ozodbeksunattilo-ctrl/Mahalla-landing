@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { AnimatePresence, MotionConfig, motion, useInView, useReducedMotion, useScroll, useSpring } from 'framer-motion'
 import {
   Menu, X, Sun, Moon, ArrowRight, Camera, ShieldCheck, Vote, Trophy, UserCheck, CheckCircle2,
   MessageCircle, CalendarHeart, Megaphone, BellRing, Lock, KeyRound, EyeOff, Smartphone, Monitor,
@@ -35,12 +35,12 @@ const Reveal = ({ children, delay = 0, className = '', y = 28 }) => (
 )
 
 const Eyebrow = ({ children, icon: Icon }) => (
-  <span className="mb-3 inline-flex items-center gap-2 rounded-full bg-brand-l px-3.5 py-1.5 text-[.78rem] font-bold uppercase tracking-[.1em] text-brand">
-    {Icon && <Icon size={14} strokeWidth={2.4} />}{children}
+  <span className="mb-3 inline-flex items-center gap-2 text-[.9rem] font-medium text-brand">
+    {Icon && <Icon size={16} strokeWidth={1.75} />}{children}
   </span>
 )
 
-const H2 = ({ children }) => <h2 className="mb-3.5 text-[clamp(1.9rem,4vw,2.8rem)] font-bold">{children}</h2>
+const H2 = ({ children }) => <h2 className="mb-4 text-[clamp(1.9rem,4vw,2.8rem)] font-semibold">{children}</h2>
 const Lead = ({ children }) => <p className="max-w-[620px] text-[1.08rem] text-muted">{children}</p>
 
 const Section = ({ id, alt, className = '', children }) => (
@@ -49,9 +49,9 @@ const Section = ({ id, alt, className = '', children }) => (
   </section>
 )
 
-const btnBase = 'cursor-pointer items-center justify-center gap-2 rounded-full border-2 font-semibold transition-all hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none'
-const btn = `${btnBase} inline-flex min-h-[52px] px-7 text-base`
-const btnP = `${btn} border-brand bg-brand text-on-brand shadow-[0_8px_24px_-8px_var(--brand)] hover:bg-brand-d hover:border-brand-d`
+const btnBase = 'cursor-pointer items-center justify-center gap-2 rounded-full border-2 font-semibold transition-[color,background-color,border-color,transform] duration-150 active:scale-[.98] motion-reduce:transition-none'
+const btn = `${btnBase} inline-flex min-h-12 px-7 text-base`
+const btnP = `${btn} border-brand bg-brand text-on-brand hover:bg-brand-d hover:border-brand-d`
 const btnO = `${btn} border-brand text-brand hover:bg-brand-l`
 
 function Counter({ to, suffix = '' }) {
@@ -118,7 +118,7 @@ function Header() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-bg/85 backdrop-blur-lg">
-      <motion.div style={{ scaleX }} className="absolute inset-x-0 bottom-0 h-[3px] origin-left bg-gradient-to-r from-brand via-sun to-leaf" />
+      <motion.div style={{ scaleX }} className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-brand" />
       <nav aria-label={t.nav.main} className="mx-auto flex h-[68px] max-w-[1240px] items-center justify-between gap-3 px-4 sm:px-5">
         <a href="#top" aria-label={t.logoAlt} className="flex-none rounded-2xl">
           <Brand />
@@ -133,7 +133,7 @@ function Header() {
           <button onClick={() => setDark(!dark)} aria-label={t.nav.theme} className="grid size-11 cursor-pointer place-items-center rounded-full border border-line bg-surface text-ink transition-colors hover:bg-brand-l">
             {dark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
-          <a href="#aloqa" className={`${btnBase} hidden min-h-11 border-sun bg-sun px-5 text-[.92rem] text-[#1d1500] shadow-[0_8px_22px_-8px_var(--sun)] hover:brightness-105 md:inline-flex`}>
+          <a href="#aloqa" className={`${btnBase} hidden min-h-11 border-sun bg-sun px-5 text-[.92rem] text-[#1d1500] hover:brightness-105 md:inline-flex`}>
             <Send size={16} />{t.nav.demo}
           </a>
           <button onClick={() => setOpen(!open)} aria-label={t.nav.menu} aria-expanded={open} className="grid size-11 cursor-pointer place-items-center rounded-full border border-line bg-surface xl:hidden">
@@ -164,8 +164,7 @@ function Phone() {
   const p = t.phone
   return (
     <div className="relative mx-auto w-[300px]" aria-hidden="true">
-      <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        className="rotate-[2.5deg] rounded-[42px] border-[9px] border-ink bg-bg p-4 pb-4 shadow-soft">
+      <div className="rotate-[2deg] rounded-[44px] border-8 border-ink bg-bg p-4 shadow-soft">
         <div className="mb-3 flex items-center justify-between text-[.72rem] font-semibold">
           <span>9:41</span><span className="inline-flex items-center gap-1"><MapPin size={11} />{p.place}</span>
         </div>
@@ -175,7 +174,7 @@ function Phone() {
           <strong className="mb-0.5 mt-2 block text-[.9rem]">{p.issue}</strong>
           {p.where}
           <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-line">
-            <motion.i initial={{ width: 0 }} animate={{ width: '72%' }} transition={{ duration: 1.4, delay: 0.5 }} className="block h-full rounded-full bg-brand" />
+            <motion.i initial={{ scaleX: 0 }} animate={{ scaleX: 0.72 }} transition={{ duration: 1.4, delay: 0.5, ease: EASE }} className="block h-full origin-left rounded-full bg-brand" />
           </div>
           <div className="mt-2.5 flex items-center justify-between">
             <span className="font-semibold">{p.votes}</span>
@@ -192,15 +191,13 @@ function Phone() {
             <span key={i} className={`flex flex-col items-center gap-0.5 ${i === 0 ? 'font-bold text-brand' : ''}`}><I size={15} />{p.tabs[i]}</span>
           ))}
         </div>
-      </motion.div>
-      <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
-        className="absolute -left-2 bottom-24 flex -rotate-[4deg] items-center gap-2 rounded-2xl border border-line bg-surface px-3.5 py-2.5 text-[.8rem] font-semibold shadow-soft sm:-left-12">
+      </div>
+      <div className="absolute -left-2 bottom-24 flex -rotate-[3deg] items-center gap-2 rounded-2xl border border-line bg-surface px-4 py-2.5 text-[.8rem] font-semibold shadow-soft sm:-left-12">
         <CheckCircle2 size={18} className="text-leaf" />{p.f1}
-      </motion.div>
-      <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
-        className="absolute -right-2 top-16 flex rotate-[3deg] items-center gap-2 rounded-2xl border border-line bg-surface px-3.5 py-2.5 text-[.8rem] font-semibold shadow-soft sm:-right-10">
-        <BellRing size={18} className="text-sun" />{p.f2}
-      </motion.div>
+      </div>
+      <div className="absolute -right-2 top-16 flex rotate-[2deg] items-center gap-2 rounded-2xl border border-line bg-surface px-4 py-2.5 text-[.8rem] font-semibold shadow-soft sm:-right-10">
+        <BellRing size={18} className="text-sun-ink" />{p.f2}
+      </div>
     </div>
   )
 }
@@ -213,16 +210,14 @@ function Hero() {
   return (
     <section className="relative overflow-hidden pb-24 pt-14 md:pt-20">
       <div aria-hidden="true" className="dots absolute inset-0 -z-10 opacity-60 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
-      <div aria-hidden="true" className="absolute -right-32 -top-24 -z-10 size-[560px] rounded-full bg-[radial-gradient(circle,var(--sun-l),transparent_70%)]" />
-      <div aria-hidden="true" className="absolute -left-40 top-64 -z-10 size-[460px] rounded-full bg-[radial-gradient(circle,var(--brand-l),transparent_70%)]" />
       <div className="mx-auto grid max-w-[1120px] grid-cols-1 items-center gap-14 px-5 lg:grid-cols-[1.1fr_.9fr]">
         <div>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
             <Eyebrow icon={Users}>{h.eyebrow}</Eyebrow>
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="mb-5 text-[clamp(2.3rem,6vw,4.1rem)] font-bold">
-            {h.a} <span className="shine">{h.b}</span> {h.c}
+            className="mb-5 text-[clamp(2.3rem,6vw,4.1rem)] font-semibold">
+            {h.a} <span className="text-brand underline decoration-sun decoration-[.08em] underline-offset-[.14em]">{h.b}</span> {h.c}
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
             className="mb-8 max-w-[520px] text-[1.18rem] text-muted">{h.lead}</motion.p>
@@ -251,11 +246,132 @@ function Hero() {
 /* ---------- steps (interactive) ---------- */
 const stepMeta = [[Camera, 'b'], [ShieldCheck, 's'], [Vote, 'b'], [Trophy, 's'], [UserCheck, 'l'], [CheckCircle2, 'l']]
 
+const EASE = [0.22, 1, 0.36, 1]
+const STEP_MS = 4200
+const fade = { initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -6 }, transition: { duration: 0.3, ease: EASE } }
+// grows from the left via transform, never width
+const Bar = ({ to = 1, delay = 0, duration = 0.9, className = 'bg-brand' }) => (
+  <span className="block h-2 overflow-hidden rounded-full bg-line">
+    <motion.i className={`block h-full origin-left rounded-full ${className}`} initial={{ scaleX: 0 }} animate={{ scaleX: to }} transition={{ duration, delay, ease: EASE }} />
+  </span>
+)
+
+/* what one issue looks like at each of the six stages */
+function StepStage({ i }) {
+  const { t } = useLang()
+  const p = t.phone
+  const list = t.steps.list
+  const tile = 'grid h-20 place-items-center rounded-xl border border-line bg-surface text-muted'
+
+  if (i === 0) return (
+    <div className="grid gap-4">
+      <div className="grid grid-cols-3 gap-3">
+        {[0, 1, 2].map((n) => (
+          <motion.span key={n} className={tile} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + n * 0.25, duration: 0.4, ease: EASE }}>
+            <Camera size={22} strokeWidth={1.75} />
+          </motion.span>
+        ))}
+      </div>
+      <Bar duration={1.6} delay={0.2} />
+    </div>
+  )
+
+  if (i === 1) return (
+    <div className="flex h-full items-center gap-5">
+      <motion.span className="grid size-16 flex-none place-items-center rounded-2xl bg-sun-l text-sun-ink" initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.4, ease: EASE }}>
+        <ShieldCheck size={30} strokeWidth={1.75} />
+      </motion.span>
+      <div className="grid gap-1.5 text-[.95rem]">
+        <span className="relative w-fit text-muted">
+          {list[0].status}
+          <motion.i className="absolute inset-x-0 top-1/2 h-px origin-left bg-muted" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.5, duration: 0.4, ease: EASE }} />
+        </span>
+        <motion.b className="inline-flex items-center gap-1.5 text-brand" initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.9, duration: 0.4, ease: EASE }}>
+          <CheckCircle2 size={17} />{list[1].status}
+        </motion.b>
+      </div>
+    </div>
+  )
+
+  if (i === 2) return (
+    <div className="grid gap-4">
+      <div className="flex items-end justify-between gap-4">
+        <div className="flex gap-2">
+          {[0, 1, 2].map((n) => (
+            <motion.span key={n} className="grid size-11 place-items-center rounded-full bg-brand text-on-brand" initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + n * 0.3, duration: 0.45, ease: EASE }}>
+              <Vote size={18} />
+            </motion.span>
+          ))}
+        </div>
+        <b className="font-serif text-2xl tabular-nums"><Counter to={86} suffix={` ${p.votes.replace(/^\d+\s*/, '')}`} /></b>
+      </div>
+      <Bar to={0.72} duration={1.4} />
+    </div>
+  )
+
+  if (i === 3) return (
+    <ul className="grid gap-2.5">
+      {issueMeta.slice(0, 3).map((x, n) => (
+        <li key={x.id} className="grid grid-cols-[20px_1fr_2.5rem] items-center gap-3 text-[.85rem]">
+          {n === 0 ? <Trophy size={18} className="text-sun-ink" /> : <x.icon size={18} className="text-muted" />}
+          <span className="grid gap-1">
+            <span className={`truncate ${n === 0 ? 'font-semibold' : 'text-muted'}`}>{t.demo.issues[n].name}</span>
+            <Bar to={x.base / issueMeta[0].base} delay={n * 0.15} className={n === 0 ? 'bg-sun' : 'bg-muted/40'} />
+          </span>
+          <b className="text-right tabular-nums">{x.base}</b>
+        </li>
+      ))}
+    </ul>
+  )
+
+  if (i === 4) return (
+    <div className="grid gap-4">
+      <motion.div className="flex items-center gap-3 rounded-xl border border-line bg-surface p-3 text-[.88rem]" initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, ease: EASE }}>
+        <span className="grid size-10 flex-none place-items-center rounded-lg bg-leaf-l text-leaf"><UserCheck size={18} /></span>
+        {p.resp}
+      </motion.div>
+      <div className="flex items-center gap-3">
+        <Clock size={16} className="flex-none text-muted" />
+        <span className="flex-1"><Bar to={0.35} delay={0.4} duration={1.2} className="bg-leaf" /></span>
+      </div>
+    </div>
+  )
+
+  return (
+    <div className="flex h-full flex-wrap content-center items-center gap-x-4 gap-y-3">
+      <span className={`${tile} size-20`}><Lightbulb size={26} strokeWidth={1.75} /></span>
+      <ArrowRight size={18} className="text-muted" />
+      <motion.span className={`${tile} size-20 border-sun bg-sun-l text-sun-ink`} initial={{ opacity: 0.3 }} animate={{ opacity: 1 }} transition={{ delay: 0.3, duration: 0.6, ease: EASE }}>
+        <Lightbulb size={26} strokeWidth={1.75} />
+      </motion.span>
+      <motion.b className="inline-flex items-center gap-1.5 text-[.9rem] text-leaf" initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.8, duration: 0.4, ease: EASE }}>
+        <CheckCircle2 size={18} className="flex-none" />{p.f1}
+      </motion.b>
+    </div>
+  )
+}
+
 function Steps() {
   const { t } = useLang()
+  const p = t.phone
   const [i, setI] = useState(0)
-  const [Icon, tone] = stepMeta[i]
+  const [auto, setAuto] = useState(true)
+  const ref = useRef(null)
+  const inView = useInView(ref, { amount: 0.4 })
+  const reduce = useReducedMotion()
+  const playing = auto && inView && !reduce
+  const tone = stepMeta[i][1]
   const s = t.steps.list[i]
+
+  // walk through the six stages on its own until someone picks one
+  useEffect(() => {
+    if (!playing) return
+    const id = setTimeout(() => setI((n) => (n + 1) % stepMeta.length), STEP_MS)
+    return () => clearTimeout(id)
+  }, [playing, i])
+
+  const pick = (n) => { setI(n); setAuto(false) }
+
   return (
     <Section id="qanday">
       <Reveal>
@@ -263,34 +379,61 @@ function Steps() {
         <H2>{t.steps.title}</H2>
         <Lead>{t.steps.lead}</Lead>
       </Reveal>
-      <div className="mt-11 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.1fr]">
-        <div role="tablist" aria-label={t.steps.aria} className="grid gap-2.5">
+      <div ref={ref} className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.1fr]">
+        <div role="tablist" aria-label={t.steps.aria} className="grid gap-2">
           {t.steps.list.map((st, n) => {
             const [I] = stepMeta[n]
             const active = n === i
             return (
-              <button key={n} role="tab" aria-selected={active} onClick={() => setI(n)}
-                className={`flex cursor-pointer items-center gap-4 rounded-2xl border p-4 text-left transition-all ${active ? 'border-brand bg-brand text-on-brand shadow-soft' : 'border-line bg-surface hover:border-brand hover:bg-brand-l'}`}>
-                <span className={`grid size-11 flex-none place-items-center rounded-xl ${active ? 'bg-white/20' : 'bg-brand-l text-brand'}`}><I size={22} /></span>
-                <span className="flex-1"><span className={`block text-[.72rem] font-bold uppercase tracking-wider ${active ? 'opacity-80' : 'text-muted'}`}>{fmt(t.steps.label, { n: n + 1 })}</span><b className="font-semibold">{st.title}</b></span>
+              <button key={n} role="tab" aria-selected={active} onClick={() => pick(n)}
+                className={`relative flex cursor-pointer items-center gap-4 overflow-hidden rounded-2xl border p-4 text-left transition-colors duration-200 ${active ? 'border-brand bg-brand text-on-brand' : 'border-line bg-surface hover:border-brand hover:bg-brand-l'}`}>
+                <span className={`grid size-11 flex-none place-items-center rounded-xl ${active ? 'bg-on-brand/15' : 'bg-brand-l text-brand'}`}><I size={20} /></span>
+                <span className="flex-1"><span className={`block text-[.8rem] ${active ? 'opacity-80' : 'text-muted'}`}>{fmt(t.steps.label, { n: n + 1 })}</span><b className="font-semibold">{st.title}</b></span>
                 <ArrowRight size={18} className={active ? '' : 'opacity-30'} />
+                {active && playing && (
+                  <motion.span key={i} aria-hidden="true" className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-on-brand/50"
+                    initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: STEP_MS / 1000, ease: 'linear' }} />
+                )}
               </button>
             )
           })}
         </div>
-        <div className="relative min-h-[320px] overflow-hidden rounded-3xl border border-line bg-surface p-8 shadow-soft">
-          <div aria-hidden="true" className="absolute -right-10 -top-10 size-44 rounded-full bg-brand-l" />
-          <AnimatePresence mode="wait">
-            <motion.div key={i} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: 0.25 }} className="relative">
-              <span className={`mb-5 grid size-16 place-items-center rounded-2xl ${tones[tone]}`}><Icon size={32} /></span>
-              <Pill tone={tone}>{fmt(t.steps.status, { s: s.status })}</Pill>
-              <h3 className="mb-3 mt-3 text-2xl font-bold">{s.title}</h3>
+
+        <div className="flex flex-col rounded-3xl border border-line bg-surface p-6 shadow-soft sm:p-8">
+          <div className="flex items-start gap-4">
+            <span className="grid size-12 flex-none place-items-center rounded-xl bg-brand-l text-brand"><Lightbulb size={22} /></span>
+            <div className="min-w-0 flex-1">
+              <b className="block font-serif text-lg">{p.issue}</b>
+              <span className="inline-flex items-center gap-1 text-[.85rem] text-muted"><MapPin size={13} />{p.where}</span>
+            </div>
+          </div>
+
+          <div className="mt-4 h-7">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span key={i} className="inline-block" {...fade}><Pill tone={tone}>{fmt(t.steps.status, { s: s.status })}</Pill></motion.span>
+            </AnimatePresence>
+          </div>
+
+          <div className="mt-4 h-[168px] overflow-hidden rounded-2xl border border-line bg-bg p-5" aria-hidden="true">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div key={i} className="h-full" {...fade}><StepStage i={i} /></motion.div>
+            </AnimatePresence>
+          </div>
+
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div key={i} className="mt-6 min-h-[132px]" {...fade}>
+              <h3 className="mb-2 text-2xl font-semibold">{s.title}</h3>
               <p className="text-muted">{s.desc}</p>
-              <div className="mt-6 flex gap-1.5">
-                {stepMeta.map((_, n) => <i key={n} className={`h-1.5 flex-1 rounded-full transition-colors ${n <= i ? 'bg-brand' : 'bg-line'}`} />)}
-              </div>
             </motion.div>
           </AnimatePresence>
+
+          <div className="mt-auto flex gap-1.5 pt-6">
+            {stepMeta.map((_, n) => (
+              <i key={n} className="h-1.5 flex-1 overflow-hidden rounded-full bg-line">
+                <motion.i className="block h-full origin-left bg-brand" initial={false} animate={{ scaleX: n <= i ? 1 : 0 }} transition={{ duration: 0.4, ease: EASE }} />
+              </i>
+            ))}
+          </div>
         </div>
       </div>
     </Section>
@@ -298,7 +441,7 @@ function Steps() {
 }
 
 /* ---------- features ---------- */
-const featMeta = [[Camera, 'b'], [Vote, 's'], [MessageCircle, 'r'], [CalendarHeart, 'l'], [Megaphone, 'b'], [BellRing, 's']]
+const featIcons = [Camera, Vote, MessageCircle, CalendarHeart, Megaphone, BellRing]
 
 function Features() {
   const { t } = useLang()
@@ -307,14 +450,14 @@ function Features() {
       <Reveal><Eyebrow icon={Lightbulb}>{t.features.eyebrow}</Eyebrow><H2>{t.features.title}</H2></Reveal>
       <div className="mt-11 grid gap-5 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
         {t.features.list.map((f, n) => {
-          const [I, tone] = featMeta[n]
+          const I = featIcons[n]
           return (
             <Reveal key={n} delay={n * 0.06}>
-              <motion.article whileHover={{ y: -6 }} className="group h-full rounded-3xl border border-line bg-bg p-7 transition-shadow hover:shadow-soft">
-                <div className={`mb-5 grid size-14 place-items-center rounded-2xl transition-transform group-hover:rotate-6 group-hover:scale-110 ${tones[tone]}`}><I size={28} /></div>
-                <h3 className="mb-2 text-xl font-bold">{f.title}</h3>
+              <article className="h-full rounded-3xl border border-line bg-bg p-7 transition-colors duration-200 hover:border-brand">
+                <div className="mb-5 grid size-12 place-items-center rounded-xl bg-brand-l text-brand"><I size={22} /></div>
+                <h3 className="mb-2 text-xl font-semibold">{f.title}</h3>
                 <p className="text-[.96rem] text-muted">{f.desc}</p>
-              </motion.article>
+              </article>
             </Reveal>
           )
         })}
@@ -451,7 +594,7 @@ function Statuses() {
         {t.statuses.list.map((label, n) => {
           const [tone, I] = statusMeta[n]
           return (
-            <motion.span key={n} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: n * 0.07 }} whileHover={{ scale: 1.06, rotate: -1.5 }}
+            <motion.span key={n} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: n * 0.06, ease: EASE }}
               className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[.92rem] font-bold ${tones[tone]}`}>
               <I size={17} />{label}
             </motion.span>
@@ -497,10 +640,10 @@ function Roles() {
           {t.roles[r].map((it, n) => {
             const I = meta.icons[n]
             return (
-              <motion.div key={n} whileHover={{ y: -4 }} className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-5">
+              <div key={n} className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-5">
                 <span className={`grid size-12 flex-none place-items-center rounded-xl ${meta.tone}`}><I size={23} /></span>
                 <div><b className="block">{it.t}</b><span className="text-[.9rem] text-muted">{it.p}</span></div>
-              </motion.div>
+              </div>
             )
           })}
         </motion.div>
@@ -524,7 +667,7 @@ function Security() {
             <Reveal key={n} delay={n * 0.1}>
               <article className="h-full rounded-3xl border border-line bg-bg p-7">
                 <span className="mb-5 grid size-14 place-items-center rounded-2xl bg-leaf-l text-leaf"><I size={28} /></span>
-                <h3 className="mb-2 text-xl font-bold">{s.t}</h3><p className="text-[.96rem] text-muted">{s.p}</p>
+                <h3 className="mb-2 text-xl font-semibold">{s.t}</h3><p className="text-[.96rem] text-muted">{s.p}</p>
               </article>
             </Reveal>
           )
@@ -589,10 +732,8 @@ function Contact() {
     <Section id="aloqa" className="!pt-0">
       <Reveal>
         <div className="relative grid grid-cols-1 items-center gap-10 overflow-hidden rounded-[32px] bg-brand p-6 text-on-brand md:grid-cols-2 md:p-14">
-          <div aria-hidden="true" className="absolute -right-20 -top-20 size-72 rounded-full bg-sun/30 blur-2xl" />
-          <div aria-hidden="true" className="absolute -bottom-24 -left-16 size-72 rounded-full bg-leaf/30 blur-2xl" />
           <div className="relative">
-            <h2 className="mb-3 text-[clamp(1.9rem,4vw,2.8rem)] font-bold">{c.title}</h2>
+            <h2 className="mb-3 text-[clamp(1.9rem,4vw,2.8rem)] font-semibold">{c.title}</h2>
             <p className="opacity-90">{c.lead}</p>
           </div>
           <form onSubmit={submit} noValidate className="relative grid gap-3">
@@ -670,15 +811,13 @@ function Splash({ onDone }) {
       className="fixed inset-0 z-[100] grid cursor-pointer place-items-center overflow-hidden bg-bg"
     >
       <div aria-hidden="true" className="dots absolute inset-0 opacity-50 [mask-image:radial-gradient(circle,black,transparent_70%)]" />
-      <motion.div aria-hidden="true" className="absolute size-[480px] rounded-full bg-[radial-gradient(circle,var(--sun-l),transparent_70%)]"
-        initial={{ scale: 0.4, opacity: 0 }} animate={{ scale: 1.2, opacity: 1 }} transition={{ duration: 1.6, ease: 'easeOut' }} />
 
       <div className="relative flex flex-col items-center px-6 text-center">
         <div className="relative grid size-32 place-items-center sm:size-40">
           {[0, 1].map((n) => (
             <motion.span key={n} aria-hidden="true" className="absolute inset-0 rounded-[2rem] border-2 border-brand"
               initial={{ scale: 1, opacity: 0.5 }} animate={{ scale: 1.7, opacity: 0 }}
-              transition={{ duration: 1.8, delay: 0.5 + n * 0.5, repeat: Infinity, ease: 'easeOut' }} />
+              transition={{ duration: 1.8, delay: 0.5 + n * 0.5, ease: 'easeOut' }} />
           ))}
           <motion.span className="grid size-full place-items-center rounded-[2rem] bg-white p-3 shadow-soft ring-1 ring-line"
             initial={{ scale: 0, rotate: -25, opacity: 0 }} animate={{ scale: 1, rotate: 0, opacity: 1 }}
@@ -698,7 +837,7 @@ function Splash({ onDone }) {
           className="mt-2 text-[1.02rem] font-medium text-muted">{t.footer.slogan}</motion.p>
 
         <div className="mt-8 h-1 w-44 overflow-hidden rounded-full bg-line">
-          <motion.i className="block h-full rounded-full bg-gradient-to-r from-brand via-sun to-leaf" initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 2.1, ease: 'easeInOut' }} />
+          <motion.i className="block h-full origin-left rounded-full bg-brand" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 2.1, ease: 'easeInOut' }} />
         </div>
       </div>
     </motion.div>
@@ -731,6 +870,7 @@ export default function App() {
 
   return (
     <LangContext.Provider value={{ lang, setLang, t }}>
+      <MotionConfig reducedMotion="user">
       <AnimatePresence>{splash && <Splash key="splash" onDone={() => setSplash(false)} />}</AnimatePresence>
       <Header />
       <main id="top">
@@ -754,6 +894,7 @@ export default function App() {
         </div>
       </footer>
       <StickyCta />
+      </MotionConfig>
     </LangContext.Provider>
   )
 }

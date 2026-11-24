@@ -68,7 +68,7 @@ const uz = {
       { name: 'Yo‘lda chuqurlar', place: 'Amir Temur shoh ko‘chasi' },
     ],
     vote: 'Ovoz berish', withdraw: 'Qaytarish',
-    status: 'Sizda {n} ta ovoz qoldi.', ok: 'Ovozingiz qabul qilindi!',
+    status: 'Sizda {n} ta ovoz qoldi.', ok: 'Ovozingiz qabul qilindi',
     back: 'Ovoz qaytarib olindi. Limit tiklandi.', limit: 'Bu oy uchun ovozlar tugadi. Birini qaytarib oling.',
   },
   statuses: {
@@ -114,7 +114,7 @@ const uz = {
     name: 'Ismingiz', namePh: 'Masalan, Aziza Karimova', phone: 'Telefon', phonePh: '+998 90 123 45 67',
     mahalla: 'Mahalla nomi', mahallaPh: 'Masalan, Yangiobod', who: 'Siz kimsiz?',
     options: ['Mahalla raisi / admin', 'Tuman hokimligi vakili', 'Fuqaro'],
-    submit: 'Demo so‘rash', thanks: 'Rahmat! Tez orada siz bilan bog‘lanamiz.',
+    submit: 'Demo so‘rash', thanks: 'Rahmat. Tez orada siz bilan bog‘lanamiz.',
   },
   footer: { copy: '© 2026 Mahalladosh. Barcha huquqlar himoyalangan.', slogan: 'Mahallamiz — bizning kuchimiz' },
 }
@@ -187,7 +187,7 @@ const ru = {
       { name: 'Ямы на дороге', place: 'Улица Амира Темура' },
     ],
     vote: 'Голосовать', withdraw: 'Вернуть',
-    status: 'У вас осталось голосов: {n}.', ok: 'Ваш голос принят!',
+    status: 'У вас осталось голосов: {n}.', ok: 'Ваш голос принят',
     back: 'Голос возвращён. Лимит восстановлен.', limit: 'Голоса на этот месяц закончились. Верните один.',
   },
   statuses: {
@@ -233,7 +233,7 @@ const ru = {
     name: 'Ваше имя', namePh: 'Например, Азиза Каримова', phone: 'Телефон', phonePh: '+998 90 123 45 67',
     mahalla: 'Название махалли', mahallaPh: 'Например, Янгиобод', who: 'Кто вы?',
     options: ['Председатель махалли / админ', 'Представитель хокимията района', 'Житель'],
-    submit: 'Заказать демо', thanks: 'Спасибо! Мы скоро свяжемся с вами.',
+    submit: 'Заказать демо', thanks: 'Спасибо. Мы скоро свяжемся с вами.',
   },
   footer: { copy: '© 2026 Mahalladosh. Все права защищены.', slogan: 'Наша махалля — наша сила' },
 }
