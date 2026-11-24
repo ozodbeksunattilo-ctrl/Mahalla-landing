@@ -241,7 +241,7 @@ const ru = {
 /* ---------- lotin → kirill (avtomatik) ---------- */
 const MAP = { a:'а',b:'б',c:'к',d:'д',e:'е',f:'ф',g:'г',h:'ҳ',i:'и',j:'ж',k:'к',l:'л',m:'м',n:'н',o:'о',p:'п',q:'қ',r:'р',s:'с',t:'т',u:'у',v:'в',w:'в',x:'х',y:'й',z:'з' }
 const isLetter = (c) => /[A-Za-z]/.test(c || '')
-const APOS = /[‘ʻ`']/
+const APOS = /[‘’ʻ`']/
 
 function cyr(src) {
   let out = ''
@@ -270,6 +270,78 @@ function cyr(src) {
 const KEEP = /(\{[a-z]+\}|Android|iOS|GPS|MB)/g
 const translit = (s) => s.split(KEEP).map((p, i) => (i % 2 ? p : cyr(p))).join('')
 const walk = (v) => (typeof v === 'string' ? translit(v) : Array.isArray(v) ? v.map(walk) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, walk(x)])) : v)
+
+uz.editorial = {
+  heroLabel: 'Mahalla uchun raqamli platforma',
+  heroTitle: 'Mahalla ishi',
+  heroAccent: 'qo‘shnilardan boshlanadi.',
+  heroLead: 'Ko‘changizdagi muammoni suratga oling. Qo‘shnilar ovoz bersin. Tanlangan ishni kim va qachon bajarishini kuzating.',
+  tryVote: 'Ovoz berib ko‘ring',
+  streetAlt: 'Daraxt soyasi tushgan mahalla ko‘chasi va yashil darvoza',
+  streetCaption: 'Toshkent mahallasidan illyustratsiya',
+  rule: ['Har oy 3 ta ovoz', 'Bitta ustuvor masala', 'Mas’ul va muddat ochiq'],
+  storyTitle: 'Bitta chiroqning hikoyasi',
+  storyLead: 'Mustaqillik ko‘chasida chiroq ishlamay qoldi. Shu misolda har bir bosqichni ko‘ring: xabar berishdan ta’mirni tasdiqlashgacha.',
+  storyDetails: [
+    'Qo‘shni chiroqni suratga olib, xabarda Mustaqillik ko‘chasi va 12-uy yonini ko‘rsatadi.',
+    'Admin xabarni tekshiradi. Tasdiqlangach, muammo mahalla lentasida hammaga ko‘rinadi.',
+    'Qo‘shnilar chiroqni ta’mirlash uchun ovoz beradi. Oy tugaguncha fikrini o‘zgartirgan kishi ovozini qaytarib olishi mumkin.',
+    'Oy oxirida chiroq eng ko‘p ovoz olsa, tizim uni ustuvor masala sifatida tanlaydi. Ovozlar teng bo‘lsa, oldinroq e’lon qilingan muammo tanlanadi.',
+    'Admin chiroqni kim ta’mirlashi va ish qachon tugashini e’lon qiladi. Masalani kuzatgan qo‘shnilarga bildirishnoma boradi.',
+    'Ta’mirdan so‘ng e’longa yonib turgan chiroqning surati qo‘shiladi. Xabar muallifi natijani tasdiqlashi yoki muammo davom etayotganini bildirishi mumkin.',
+  ],
+  lampAlt: 'Kechki payt o‘chiq turgan ko‘cha chirog‘i',
+  example: 'Misol',
+  demoLabel: 'Ovoz berish demosi',
+  voteTitle: 'Mahallada avval nima hal qilinadi?',
+  voteLead: 'Quyidagi misollardan uchtasigacha tanlang. Fikringiz o‘zgarsa, ovozingizni qaytarib oling.',
+  remaining: 'qolgan ovoz',
+  voteTotal: '{n} ta ovoz',
+  demoNote: 'Bu mashq uchun misol.',
+  hasharAlt: 'Hasharda qo‘shnilar birgalikda ko‘chat ekmoqda',
+  hasharCaption: 'Hashar · mahalla hayotidan illyustratsiya',
+  communityTitle: 'Mahallada yana nimalar bor?',
+  rolesTitle: 'Aholi va mahalla admini',
+  contactUnavailable: 'Hozircha ulanish uchun arizalar qabul qilinmaydi. Ovoz berish demosini sinab ko‘rishingiz mumkin.',
+  formStatus: { pending: 'Ariza yuborilmoqda…', error: 'Ariza yuborilmadi. Qayta urinib ko‘ring.' },
+  skip: 'Asosiy mazmunga o‘tish',
+}
+
+ru.editorial = {
+  heroLabel: 'Цифровая платформа для махалли',
+  heroTitle: 'Дела махалли',
+  heroAccent: 'начинаются с соседей.',
+  heroLead: 'Сфотографируйте проблему на улице, предложите соседям проголосовать и следите, кто и к какому сроку займётся выбранной задачей.',
+  tryVote: 'Попробовать голосование',
+  streetAlt: 'Улица махалли с зелёными воротами в тени деревьев',
+  streetCaption: 'Иллюстрация ташкентской махалли',
+  rule: ['3 голоса в месяц', 'Одна приоритетная задача', 'Видны ответственный и срок'],
+  storyTitle: 'История одного фонаря',
+  storyLead: 'На улице Мустакиллик погас фонарь. Посмотрите, что происходит с заявкой от первого сообщения до подтверждения ремонта.',
+  storyDetails: [
+    'Житель фотографирует фонарь и указывает в заявке место: улица Мустакиллик, у дома 12.',
+    'Администратор проверяет заявку. После подтверждения она появляется в ленте махалли.',
+    'Соседи голосуют за ремонт фонаря. Если кто-то передумает, до конца месяца он может вернуть свой голос.',
+    'Если ремонт фонаря набирает больше всего голосов, система выбирает его автоматически. При равном счёте выигрывает заявка, опубликованная раньше.',
+    'Администратор сообщает, кто отремонтирует фонарь и к какому сроку. Подписчики получают уведомление.',
+    'После ремонта в заявке появляется фото работающего фонаря. Автор подтверждает результат или сообщает, что проблема осталась.',
+  ],
+  lampAlt: 'Неработающий уличный фонарь в сумерках',
+  example: 'Пример',
+  demoLabel: 'Демо голосования',
+  voteTitle: 'Что в махалле нужно решить первым?',
+  voteLead: 'Выберите до трёх задач из списка. Если передумаете, голос можно вернуть.',
+  remaining: 'осталось голосов',
+  voteTotal: 'Голосов: {n}',
+  demoNote: 'Это учебный пример.',
+  hasharAlt: 'Соседи вместе сажают дерево во время хашара',
+  hasharCaption: 'Хашар · иллюстрация жизни махалли',
+  communityTitle: 'Что ещё происходит в махалле?',
+  rolesTitle: 'Жители и администратор махалли',
+  contactUnavailable: 'Приём заявок на подключение пока закрыт. Вы можете попробовать демо голосования.',
+  formStatus: { pending: 'Отправляем заявку…', error: 'Не удалось отправить заявку. Попробуйте ещё раз.' },
+  skip: 'Перейти к содержанию',
+}
 
 const uzCyrl = walk(uz)
 uzCyrl.logoAlt = uz.logoAlt
