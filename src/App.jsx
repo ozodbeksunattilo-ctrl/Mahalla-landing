@@ -87,13 +87,8 @@ function Header() {
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-bg/90 backdrop-blur">
       <nav aria-label="Asosiy navigatsiya" className="mx-auto flex h-[68px] max-w-[1120px] items-center justify-between px-5">
-        <a href="#top" className="flex items-center gap-2.5 font-serif text-xl font-bold" aria-label="Mahalladosh">
-          <i className="grid size-[34px] place-items-center rounded-[10px] bg-green" aria-hidden="true">
-            <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="var(--on-green)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />
-            </svg>
-          </i>
-          Mahalladosh
+        <a href="#top" aria-label="Mahalladosh">
+          <img src="/logo.jpg" alt="Mahalladosh — Mahallamiz, bizning kuchimiz" className="h-[60px] w-auto rounded-lg bg-white" />
         </a>
         <ul className="hidden gap-[26px] md:flex">
           {navLinks.map(([href, label]) => (
