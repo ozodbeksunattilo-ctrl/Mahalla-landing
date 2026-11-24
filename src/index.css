@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+:root {
+  --bg:#faf6ee; --surface:#fff; --ink:#1d2a24; --muted:#5b6a62; --line:#e6dfd0;
+  --green:#14624a; --green-d:#0d4535; --green-l:#e1f0e9; --on-green:#fff;
+  --clay:#c8553d; --clay-l:#fbe6df; --gold:#e3a72f; --gold-l:#fcf0d2; --gold-ink:#8a6200;
+  --shadow:0 10px 30px rgba(29,42,36,.08);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#0f1713; --surface:#17221c; --ink:#eef2ee; --muted:#9db0a5; --line:#26352d;
+    --green:#4fc29a; --green-d:#7fdcb8; --green-l:#17332a; --on-green:#0f1713;
+    --clay:#ef8a73; --clay-l:#3a211b; --gold:#f0c053; --gold-l:#3a3015; --gold-ink:#f0c053;
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-green: var(--green);
+  --color-green-d: var(--green-d);
+  --color-green-l: var(--green-l);
+  --color-on-green: var(--on-green);
+  --color-clay: var(--clay);
+  --color-clay-l: var(--clay-l);
+  --color-gold: var(--gold);
+  --color-gold-l: var(--gold-l);
+  --color-gold-ink: var(--gold-ink);
+  --shadow-soft: var(--shadow);
+  --font-serif: Fraunces, Georgia, serif;
+  --font-sans: Onest, system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: var(--font-serif); line-height: 1.15; letter-spacing: -.01em; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
