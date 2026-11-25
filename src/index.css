@@ -65,7 +65,17 @@ h3 { font-size: clamp(1.4rem, 2.6vw, 2rem); letter-spacing: -.035em; }
 .language > svg:first-child { position: absolute; left: 9px; pointer-events: none; }
 .language > svg:last-child { position: absolute; right: 7px; pointer-events: none; }
 .language select { min-height: 42px; padding: 0 24px 0 32px; appearance: none; background: transparent; color: var(--ink); border: none; font-size: .875rem; font-weight: 650; }
-.language option { background: var(--surface); }
+.language option { background: var(--surface); color: var(--ink); font-weight: 650; }
+/* Customizable select where supported; other browsers keep the native list with the colors above */
+@supports (appearance: base-select) {
+  .language select, .language ::picker(select) { appearance: base-select; }
+  .language select::picker-icon { display: none; }
+  .language ::picker(select) { margin-top: 6px; padding: 4px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--ink); }
+  .language option { min-width: 64px; padding: 7px 10px; border-radius: 3px; font-size: .875rem; }
+  .language option::checkmark { display: none; }
+  .language option:hover { background: var(--soft); }
+  .language option:checked { background: var(--green); color: var(--on-green); }
+}
 .icon-button { display: grid; flex: none; width: 42px; height: 42px; place-items: center; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: transparent; }
 .icon-button:hover { background: var(--soft); }
 .menu-button { display: none; }
