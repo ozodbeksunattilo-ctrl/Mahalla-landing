@@ -71,6 +71,7 @@ h3 { font-size: clamp(1.4rem, 2.6vw, 2rem); letter-spacing: -.035em; }
 /* Customizable select where supported; other browsers keep the native list with the colors above */
 @supports (appearance: base-select) {
   .language select, .language ::picker(select) { appearance: base-select; }
+  .language select { align-items: center; }
   .language select::picker-icon { display: none; }
   .language ::picker(select) { margin-top: 6px; padding: 4px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--ink); }
   .language option { min-width: 64px; padding: 7px 10px; border-radius: 3px; font-size: .875rem; }
