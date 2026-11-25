@@ -332,7 +332,7 @@ function Footer() {
 export default function App() {
   const [lang, setLang] = useState(() => {
     const saved = storedValue('lang')
-    return Object.hasOwn(dictionaries, saved) ? saved : navigator.language.startsWith('ru') ? 'ru' : 'uz'
+    return Object.hasOwn(dictionaries, saved) ? saved : navigator.language.startsWith('ru') ? 'ru' : navigator.language.startsWith('en') ? 'en' : 'uz'
   })
   const [dark, setDark] = useState(() => {
     const saved = storedValue('theme')

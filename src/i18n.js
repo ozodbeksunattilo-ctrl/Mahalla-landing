@@ -343,14 +343,169 @@ ru.editorial = {
   skip: 'Перейти к содержанию',
 }
 
+/* ---------- English ---------- */
+const en = {
+  title: 'Mahalladosh — your mahalla solves its problems together',
+  logoAlt: 'Mahalladosh — Our mahalla is our strength',
+  nav: {
+    main: 'Main navigation',
+    links: ['How it works', 'Features', 'Voting demo', 'Who it’s for', 'FAQ'],
+    demo: 'Request a demo', theme: 'Switch theme', menu: 'Menu', lang: 'Choose language',
+  },
+  hero: {
+    eyebrow: 'A digital platform for the mahalla',
+    a: 'Your mahalla’s problems', b: 'get solved', c: 'together',
+    lead: 'Post a problem with a photo, neighbors vote, and each month the most-voted issue gets a responsible person and a clear deadline.',
+    cta1: 'Connect my mahalla', cta2: 'Try voting',
+    stats: [
+      { n: 3, s: ' votes', d: 'per resident each month' },
+      { n: 1, s: ' winner', d: 'each month, with someone responsible' },
+      { n: 100, s: '%', d: 'open status history' },
+    ],
+  },
+  phone: {
+    place: 'Yangiobod mahalla', month: 'November vote', voting: 'Voting open',
+    issue: 'Street light is out', where: 'Mustaqillik Street, by house 12',
+    votes: '86 votes', vote: 'Vote', progress: 'In progress',
+    issue2: 'Playground repair', resp: 'Responsible: Public works department · December 20',
+    tabs: ['Home', 'Issues', 'Events', 'Chat'],
+    f1: 'Solved — photo added', f2: 'Votes left: 2',
+  },
+  steps: {
+    eyebrow: 'How it works', title: 'From problem to result in six steps',
+    lead: 'Tap a step: every stage is visible, and who did what and when stays in the history.',
+    label: 'Step {n}', status: 'Status: {s}', aria: 'Steps',
+    list: [
+      { title: 'Problem submitted', status: 'In moderation', desc: 'Title, description, category and location. Attach up to three photos and one short video. Upload progress is shown, and a retry after a dropped connection doesn’t create a duplicate.' },
+      { title: 'Admin approves', status: 'Open', desc: 'The post passes moderation and appears in the feed. If it’s rejected, the reason is shown and the author can fix it and resubmit.' },
+      { title: 'Neighbors vote', status: 'Voting open', desc: 'Three votes a month. Until the period closes, a vote can be taken back and given to another post.' },
+      { title: 'Winner is chosen', status: 'Chosen in the monthly vote', desc: 'At the end of the month the system picks the most-voted issue on its own. On a tie, the earlier post wins. Nobody can swap it by hand.' },
+      { title: 'Owner and deadline', status: 'In progress', desc: 'The admin names the responsible person, the next step and the expected deadline. Followers get a notification.' },
+      { title: 'Result confirmed', status: 'Solved', desc: 'A photo of the finished work appears on the post. The author confirms it or reports “Problem persists” with evidence.' },
+    ],
+  },
+  features: {
+    eyebrow: 'Features', title: 'Mahalla life in one app',
+    list: [
+      { title: 'Posts with photos and video', desc: 'Photos up to 5 MB, video up to 25 MB. Upload progress is shown, and a retry never creates a copy of the post.' },
+      { title: 'Fair monthly voting', desc: 'Limits, deadlines and repeat votes are checked on the server. On a tie, the earlier post wins.' },
+      { title: 'Mahalla chat', desc: 'A shared chat only for members of your mahalla. Messages can be reported, and the admin can hide them.' },
+      { title: 'Events', desc: 'Hashar clean-up days, tree planting, meetings, celebrations. Tap “I’m going” and get a reminder 24 hours before.' },
+      { title: 'Announcements', desc: 'News and important messages. An “Important” announcement arrives as a push and opens the right page.' },
+      { title: 'Notifications', desc: 'Post status, the winning issue, updates on issues you follow — all visible in the app even with push turned off.' },
+    ],
+  },
+  demo: {
+    eyebrow: 'Monthly vote · live demo', title: 'One most important issue each month',
+    lead: 'The period starts at 00:00 Tashkent time on the first day of the month and closes automatically at the end. Try voting yourself in the demo below.',
+    points: [
+      { t: '3 votes', p: 'One per post. You can take a vote back and give it to another.' },
+      { t: 'Automatic result', p: 'The system picks the winner based on the standings when the period closes.' },
+      { t: 'If there’s no winner', p: 'Open issues move to the next period and start again from zero votes.' },
+    ],
+    card: 'Mahalla vote', closes: '{n} days until it closes', aria: 'Voting demo', left: 'Votes left: {n}',
+    issues: [
+      { name: 'Street light is out', place: 'Mustaqillik Street' },
+      { name: 'No trash container', place: 'Navoi Street, house 4' },
+      { name: 'Irrigation ditch not cleaned', place: 'Bog Street' },
+      { name: 'Potholes in the road', place: 'Amir Temur Avenue' },
+    ],
+    vote: 'Vote', withdraw: 'Take back',
+    status: 'You have {n} votes left.', ok: 'Your vote is counted',
+    back: 'Vote taken back. Your limit is restored.', limit: 'You’ve used this month’s votes. Take one back first.',
+  },
+  statuses: {
+    eyebrow: 'Transparency', title: 'An issue’s status is always clear',
+    lead: 'Each status has an icon and a label as well as a color, so everyone can read it.',
+    list: ['In moderation', 'Needs changes', 'Voting open', 'Chosen in the monthly vote', 'In progress', 'Waiting for an organization’s reply', 'Solved'],
+  },
+  roles: {
+    eyebrow: 'Who it’s for', title: 'An app for residents, a panel for the admin',
+    tabs: ['Residents · mobile app', 'Admin · web panel'],
+    aholi: [
+      { t: 'Report a problem', p: 'With photos and video' }, { t: 'Vote', p: '3 votes a month' },
+      { t: 'Mahalla chat', p: 'Talk with neighbors' }, { t: 'Join events', p: 'Tap “I’m going”' },
+      { t: 'Follow issues', p: 'Stay up to date' }, { t: 'Android and iOS', p: 'One app' },
+    ],
+    admin: [
+      { t: 'Create accounts', p: 'With a temporary password' }, { t: 'Moderation', p: 'Approve and reject' },
+      { t: 'Vote results', p: 'Owner and deadline' }, { t: 'Events', p: 'Create and publish' },
+      { t: 'Announcements', p: 'Important ones by push' }, { t: 'Activity log', p: 'Everything is recorded' },
+    ],
+  },
+  security: {
+    eyebrow: 'Security', title: 'Your data is protected',
+    list: [
+      { t: 'Mahallas are kept apart', p: 'One mahalla can’t see another’s posts, chat or files.' },
+      { t: 'Access through the admin', p: 'There’s no open sign-up. The admin verifies each resident and issues a temporary password, which is changed at first sign-in.' },
+      { t: 'Minimal data', p: 'Only a display name. No home address or passport is requested, and GPS data is stripped from photos.' },
+    ],
+  },
+  faq: {
+    eyebrow: 'FAQ', title: 'Frequently asked questions',
+    list: [
+      { q: 'How do I sign in to the app?', a: 'Your mahalla admin creates an account for you and gives you a temporary password. You set your own password the first time you sign in.' },
+      { q: 'How many problems can I report?', a: 'Posting is unlimited, but you get only three votes a month, one per post.' },
+      { q: 'What if it’s an emergency?', a: 'The post screen has a reminder: in an emergency, contact the relevant emergency service directly.' },
+      { q: 'Can the admin change the winner?', a: 'No. The system picks the winner automatically when the period ends, and it can’t be changed by hand.' },
+      { q: 'Which languages are supported?', a: 'The app works in Uzbek (Latin and Cyrillic) and Russian. This site is also available in English.' },
+    ],
+  },
+  contact: {
+    title: 'Connect your mahalla',
+    lead: 'Leave your details — we’ll walk you through a demo and set up the first admin for your mahalla.',
+    name: 'Your name', namePh: 'e.g. Aziza Karimova', phone: 'Phone', phonePh: '+998 90 123 45 67',
+    mahalla: 'Mahalla name', mahallaPh: 'e.g. Yangiobod', who: 'Who are you?',
+    options: ['Mahalla chair / admin', 'District administration representative', 'Resident'],
+    submit: 'Request a demo', thanks: 'Thank you. We’ll be in touch soon.',
+  },
+  footer: { copy: '© 2026 Mahalladosh. All rights reserved.', slogan: 'Our mahalla is our strength' },
+  editorial: {
+    heroLabel: 'A digital platform for the mahalla',
+    heroTitle: 'Mahalla work',
+    heroAccent: 'starts with neighbors.',
+    heroLead: 'Take a photo of a problem on your street. Let neighbors vote. See who will fix the chosen issue, and by when.',
+    tryVote: 'Try voting',
+    streetAlt: 'A mahalla street with a green gate in the shade of trees',
+    streetCaption: 'Illustration of a Tashkent mahalla',
+    rule: ['3 votes a month', 'One priority issue', 'Owner and deadline in the open'],
+    storyTitle: 'The story of one street light',
+    storyLead: 'A street light went out on Mustaqillik Street. Follow it through every stage, from the first report to the confirmed repair.',
+    storyDetails: [
+      'A neighbor photographs the light and marks the spot in the report: Mustaqillik Street, by house 12.',
+      'The admin checks the report. Once approved, the problem appears in the mahalla feed for everyone.',
+      'Neighbors vote to fix the light. Anyone who changes their mind can take their vote back until the month ends.',
+      'If the light gets the most votes by the end of the month, the system picks it as the priority issue. On a tie, the earlier report wins.',
+      'The admin announces who will repair the light and when the work will be done. Neighbors following the issue get a notification.',
+      'After the repair, a photo of the working light is added to the post. The author can confirm the result or report that the problem persists.',
+    ],
+    lampAlt: 'A street light that is off at dusk',
+    example: 'Example',
+    demoLabel: 'Voting demo',
+    voteTitle: 'What should the mahalla fix first?',
+    voteLead: 'Pick up to three of the examples below. If you change your mind, take your vote back.',
+    remaining: 'votes left',
+    voteTotal: '{n} votes',
+    demoNote: 'This is a practice example.',
+    hasharAlt: 'Neighbors planting a tree together during a hashar',
+    hasharCaption: 'Hashar · illustration of mahalla life',
+    communityTitle: 'What else happens in the mahalla?',
+    rolesTitle: 'Residents and the mahalla admin',
+    contactUnavailable: 'We aren’t taking connection requests yet. You can try the voting demo in the meantime.',
+    formStatus: { pending: 'Sending your request…', error: 'Your request wasn’t sent. Please try again.' },
+    skip: 'Skip to main content',
+  },
+}
+
 const uzCyrl = walk(uz)
 uzCyrl.logoAlt = uz.logoAlt
 
-export const dictionaries = { uz, uzc: uzCyrl, ru }
+export const dictionaries = { uz, uzc: uzCyrl, ru, en }
 export const languages = [
   { code: 'uz', short: 'UZ', label: 'O‘zbekcha (lotin)', html: 'uz' },
   { code: 'uzc', short: 'ЎЗ', label: 'Ўзбекча (кирилл)', html: 'uz-Cyrl' },
   { code: 'ru', short: 'RU', label: 'Русский', html: 'ru' },
+  { code: 'en', short: 'EN', label: 'English', html: 'en' },
 ]
 
 export const LangContext = createContext({ lang: 'uz', setLang: () => {}, t: uz })
