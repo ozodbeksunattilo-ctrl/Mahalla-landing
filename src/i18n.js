@@ -14,6 +14,7 @@ const uz = {
     a: 'Mahallangiz muammosi', b: 'birgalikda', c: 'hal bo‘ladi',
     lead: 'Muammoni foto bilan e’lon qiling, qo‘shnilar ovoz beradi, har oy eng ko‘p ovoz olgan masala mas’ul va aniq muddat bilan hal qilinadi.',
     cta1: 'Mahallamga ulash', cta2: 'Ovoz berib ko‘ring',
+    apk: 'APK yuklash', apkNote: 'Android uchun', soon: 'Tez orada', getOn: 'Yuklab oling',
     stats: [
       { n: 3, s: ' ovoz', d: 'har oy har bir aholiga' },
       { n: 1, s: ' g‘olib', d: 'har oy mas’ul bilan' },
@@ -133,6 +134,7 @@ const ru = {
     a: 'Проблемы вашей махалли', b: 'вместе', c: 'решаются',
     lead: 'Опубликуйте проблему с фото, соседи проголосуют, а самый популярный вопрос каждого месяца будет решён с ответственным и чётким сроком.',
     cta1: 'Подключить махаллю', cta2: 'Попробовать голосование',
+    apk: 'Скачать APK', apkNote: 'Для Android', soon: 'Скоро', getOn: 'Скачайте в',
     stats: [
       { n: 3, s: ' голоса', d: 'в месяц каждому жителю' },
       { n: 1, s: ' победитель', d: 'каждый месяц с ответственным' },
@@ -267,7 +269,7 @@ function cyr(src) {
   return out
 }
 
-const KEEP = /(\{[a-z]+\}|Android|iOS|GPS|MB)/g
+const KEEP = /(\{[a-z]+\}|Android|iOS|GPS|MB|APK)/g
 const translit = (s) => s.split(KEEP).map((p, i) => (i % 2 ? p : cyr(p))).join('')
 const walk = (v) => (typeof v === 'string' ? translit(v) : Array.isArray(v) ? v.map(walk) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, walk(x)])) : v)
 
@@ -357,6 +359,7 @@ const en = {
     a: 'Your mahalla’s problems', b: 'get solved', c: 'together',
     lead: 'Post a problem with a photo, neighbors vote, and each month the most-voted issue gets a responsible person and a clear deadline.',
     cta1: 'Connect my mahalla', cta2: 'Try voting',
+    apk: 'Download APK', apkNote: 'For Android', soon: 'Coming soon', getOn: 'Get it on',
     stats: [
       { n: 3, s: ' votes', d: 'per resident each month' },
       { n: 1, s: ' winner', d: 'each month, with someone responsible' },

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
-  Check, ChevronDown, CircleHelp, Globe, MapPin, Menu, Moon, Plus, Sun, X,
+  Check, ChevronDown, CircleHelp, Download, Globe, MapPin, Menu, Moon, Plus, Sun, X,
 } from 'lucide-react'
 import { dictionaries, languages, LangContext, useLang, fmt } from './i18n'
 
@@ -67,6 +67,46 @@ function Header({ dark, toggleTheme }) {
   )
 }
 
+const apkUrl = 'https://expo.dev/accounts/otabek31s-team/projects/mahalladosh/builds/6c111278-3f1c-48f8-b780-0bbc1255bd47'
+
+function PlayIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+      <path fill="#00d7fe" d="M3.6 1.8 13.4 12l-9.8 10.2c-.4-.2-.6-.6-.6-1.1V2.9c0-.5.2-.9.6-1.1Z" />
+      <path fill="#ffce00" d="m16.8 8.6-3.4 3.4 3.4 3.4 3.9-2.2c1-.6 1-1.8 0-2.4l-3.9-2.2Z" />
+      <path fill="#ff3a44" d="M16.8 15.4 13.4 12l-9.8 10.2c.4.2.9.2 1.4-.1l11.8-6.7Z" />
+      <path fill="#00f076" d="M16.8 8.6 5 1.9c-.5-.3-1-.3-1.4-.1L13.4 12l3.4-3.4Z" />
+    </svg>
+  )
+}
+
+function AppleIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+      <path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.7-4.1ZM13.9 4.9c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5Z" />
+    </svg>
+  )
+}
+
+function AppDownload() {
+  const { t } = useLang()
+  return (
+    <div className="app-download">
+      <a className="store store-apk" href={apkUrl} target="_blank" rel="noopener noreferrer">
+        <Download size={20} aria-hidden="true" />
+        <span><small>{t.hero.apkNote}</small>{t.hero.apk}</span>
+      </a>
+      {[[PlayIcon, 'Google Play'], [AppleIcon, 'App Store']].map(([Icon, name]) => (
+        <span key={name} className="store store-soon" aria-disabled="true">
+          <Icon />
+          <span><small>{t.hero.getOn}</small>{name}</span>
+          <em>{t.hero.soon}</em>
+        </span>
+      ))}
+    </div>
+  )
+}
+
 function Hero() {
   const { t } = useLang()
   return (
@@ -80,6 +120,7 @@ function Hero() {
           <a className={contactEndpoint ? 'text-link' : 'button button-primary'} href="#demo">{t.editorial.tryVote}</a>
           {!contactEndpoint && <a className="text-link" href="#qanday">{t.nav.links[0]}</a>}
         </div>
+        <AppDownload />
       </div>
       <figure className="hero-photo">
         <img src="/images/mahalla-street.webp" alt={t.editorial.streetAlt} width="724" height="724" />
@@ -323,6 +364,7 @@ function Footer() {
       <div className="wrap footer-inner">
         <Brand />
         <span>{t.footer.copy}</span>
+        <AppDownload />
         <a className="text-link" href="#faq"><CircleHelp size={16} aria-hidden="true" />{t.nav.links[4]}</a>
       </div>
     </footer>
